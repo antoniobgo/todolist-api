@@ -8,10 +8,10 @@ class SessionsController < ApplicationController
       token = encode_user_data({ user_data: user.id })
 
       # return to user
-      render json: { token: token }
+      render json: { token: }
     else
       # render error message
-      render json: { message: "invalid credentials" }
+      render json: { message: 'invalid credentials' }
     end
   end
 
@@ -25,9 +25,9 @@ class SessionsController < ApplicationController
       token = encode_user_data({ user_data: user.id })
 
       # return to user
-      render json: { token: token }
+      render json: { token: }
     else
-      render json: { message: "invalid credentials" }
+      render json: { message: 'invalid credentials' }
     end
   end
-end 
+end

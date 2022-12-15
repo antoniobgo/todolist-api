@@ -3,4 +3,6 @@
 class Section < ApplicationRecord
   belongs_to :board
   has_many :items
+
+  validates :title, presence: true
 end
