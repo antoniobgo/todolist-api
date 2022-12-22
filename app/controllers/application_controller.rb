@@ -1,46 +1,32 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::API
-  SECRET = 'yoursecretword'
+  before_action :authorized
 
-  def authentication
-    # making a request to a secure route, token must be included in the headers
-    decode_data = decode_user_data(request.headers['token'])
-    # byebug
-    # getting user id from a nested JSON in an array.
-    user_id = decode_data[0]['user_data'] if decode_data
-    # find a user in the database to be sure token is for a real user
-    user = User.find_by_id(user_id)
+  def encode_token(payload)
+    JWT.encode(payload, 'hellomars1211')
+  end
 
-    # The barebone of this is to return true or false, as a middleware
-    # its main purpose is to grant access or return an error to the user
+  def decoded_token
+    header = request.headers['Authorization']
+    return unless header
 
-    if user
-      true
-    else
-      render json: { message: 'invalid credentials' }
+    token = header.split(' ')[1]
+    begin
+      JWT.decode(token, 'hellomars1211', true, algorithm: 'HS256')
+    rescue JWT::DecodeError
+      nil
     end
   end
 
-  # turn user data (payload) to an encrypted string  [ A ]
-  def encode_user_data(payload)
-    JWT.encode payload, SECRET, 'HS256'
+  def current_user
+    return unless decoded_token
+
+    user_id = decoded_token[0]['user_id']
+    @user = User.find_by(id: user_id)
   end
 
-  # turn user data (payload) to an encrypted string  [ B ]
-  def encode_user_data(payload)
-    JWT.encode payload, SECRET, 'HS256'
-  end
-
-  # decode token and return user info, this returns an array, [payload and algorithms] [ A ]
-  def decode_user_data(token)
-    JWT.decode token, SECRET, true, { algorithm: 'HS256' }
-  rescue StandardError => e
-    puts e
-  end
-
-  # decode token and return user info, this returns an array, [payload and algorithms] [ B ]
-  def decode_user_data(token)
-    JWT.decode token, SECRET, true, { algorithm: 'HS256' }
-  rescue StandardError => e
-    puts e
+  def authorized
+    render json: { message: 'Please log in' }, status: :unauthorized unless !!current_user
   end
 end

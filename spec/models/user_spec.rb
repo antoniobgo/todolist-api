@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe User do
@@ -24,12 +26,12 @@ describe User do
   end
 
   context 'when password exists' do
-    context "and has 0 characters" do
-      let (:user) { User.new(email: 'antonio.gomes@gmail.com', password: '') }
-      it "should not be valid" do
+    context 'and has 0 characters' do
+      let(:user) { User.new(email: 'antonio.gomes@gmail.com', password: '') }
+      it 'should not be valid' do
         expect(user.valid?).to be false
       end
-      it "should not save" do
+      it 'should not save' do
         expect(user.save).to be false
       end
     end
@@ -65,7 +67,10 @@ describe User do
     end
 
     context 'and has more than 72 characters' do
-      let(:user) { User.new(email: 'antonio.gomes@gmail.com', password: '1234567890123456789012345678901234567890123456789012345678901234567890123') }
+      let(:user) do
+        User.new(email: 'antonio.gomes@gmail.com',
+                 password: '1234567890123456789012345678901234567890123456789012345678901234567890123')
+      end
       it 'should be valid' do
         expect(user.valid?).to be false
       end
@@ -74,7 +79,10 @@ describe User do
       end
     end
     context 'and has 72 characters' do
-      let(:user) { User.new(email: 'antonio.gomes@gmail.com', password: '123456789012345678901234567890123456789012345678901234567890123456789012') }
+      let(:user) do
+        User.new(email: 'antonio.gomes@gmail.com',
+                 password: '123456789012345678901234567890123456789012345678901234567890123456789012')
+      end
       it 'should be valid' do
         expect(user.valid?).to be true
       end
@@ -84,8 +92,8 @@ describe User do
     end
   end
 
-  context "when email exists" do
-    context "and is an empty string" do
+  context 'when email exists' do
+    context 'and is an empty string' do
       let(:user) { User.new(email: '', password: '12345678') }
       it 'should not be valid' do
         expect(user.valid?).to be false
@@ -94,7 +102,7 @@ describe User do
         expect(user.save).to be false
       end
     end
-    context "and has a valid email structure with less than 70 characters" do
+    context 'and has a valid email structure with less than 70 characters' do
       let(:user) { User.new(email: 'antonio@antonio.com', password: '12345678') }
       it 'should be valid' do
         expect(user.valid?).to be true
@@ -103,8 +111,11 @@ describe User do
         expect(user.save).to be true
       end
     end
-    context "and has a valid email structure with 70 characters" do
-      let(:user) { User.new(email: 'antonioantonioantonioantonioantonioantonioantonioantonioaqwe@gmail.com', password: '1234567890') }
+    context 'and has a valid email structure with 70 characters' do
+      let(:user) do
+        User.new(email: 'antonioantonioantonioantonioantonioantonioantonioantonioaqwe@gmail.com',
+                 password: '1234567890')
+      end
       it 'should be valid' do
         expect(user.valid?).to be true
       end
@@ -112,8 +123,11 @@ describe User do
         expect(user.save).to be true
       end
     end
-    context "and has a valid email structure with more than 70 characters" do
-      let(:user) { User.new(email: 'antonioantonioantonioantonioaadntonioantonioantonioantonioaqwe@gmail.com', password: '1234567890') }
+    context 'and has a valid email structure with more than 70 characters' do
+      let(:user) do
+        User.new(email: 'antonioantonioantonioantonioaadntonioantonioantonioantonioaqwe@gmail.com',
+                 password: '1234567890')
+      end
       it 'should be valid' do
         expect(user.valid?).to be false
       end
@@ -121,7 +135,7 @@ describe User do
         expect(user.save).to be false
       end
     end
-    context "and has an invalid email structure" do
+    context 'and has an invalid email structure' do
       let(:user) { User.new(email: '@a', password: '12345678') }
       it 'should be valid' do
         expect(user.valid?).to be false
@@ -132,4 +146,3 @@ describe User do
     end
   end
 end
-

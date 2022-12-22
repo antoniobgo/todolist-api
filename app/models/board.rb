@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Board < ApplicationRecord
   has_many :sections, dependent: :destroy
   belongs_to :user
