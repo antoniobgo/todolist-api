@@ -5,7 +5,22 @@ class SectionsController < ApplicationController
     render json: Board.find_by!(id: params[:board_id]).sections, status: 200
   end
 
+  def create
+    board = Board.find_by!(id: params[:board_id])
+    section = Section.new(section_params)
+    section.board = board
+    if section.save
+      render json: section, status: 201
+    else
+      render json: {message: "couldnt create section"}, status: :unprocessable_entity
+    end
+  end
+
   private
+  
+  def section_params
+    params.permit(:title)
+  end
 
   def handle_record_not_found(e)
     render json: { message: 'Board not found' }, status: :unprocessable_entity
