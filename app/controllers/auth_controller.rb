@@ -9,7 +9,7 @@ class AuthController < ApplicationController
     if @user.authenticate(login_params[:password])
       @token = encode_token(user_id: @user.id)
       render json: {
-        # user: UserSerializer.new(@user),
+        user: @user.as_json(only: [:email]),
         token: @token
       }, status: :accepted
     else

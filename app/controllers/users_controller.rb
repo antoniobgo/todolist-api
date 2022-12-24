@@ -15,10 +15,10 @@ class UsersController < ApplicationController
   # end
 
   def create
-    user = User.create!(user_params)
+    @user = User.create!(user_params)
     @token = encode_token(user_id: user.id)
     render json: {
-      # user: UserSerializer.new(user),
+      user: @user.as_json(only: [:email]),
       token: @token
     }, status: :created
   end
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
   # end
 
   def me
-    render json: current_user, status: :ok
+    render json: {user: current_user.as_json(only: [:email])}, status: :ok
   end
 
   private
