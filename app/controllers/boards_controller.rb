@@ -15,7 +15,7 @@ class BoardsController < ApplicationController
     board.user = current_user
 
     if board.save
-      render json: board, status: 201
+      render json: {board: board.as_json(only: [:id, :title])}, status: 201
     else
       render json: {message: "couldnt create board"}, status: :unprocessable_entity
     end
