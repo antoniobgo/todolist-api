@@ -16,7 +16,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.create!(user_params)
-    @token = encode_token(user_id: user.id)
+    @token = encode_token(user_id: @user.id)
     render json: {
       user: @user.as_json(only: [:email]),
       token: @token
@@ -39,7 +39,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.permit(:email, :password)
+    params.permit(:email, :password, :password_confirmation)
   end
 
   def handle_invalid_record(e)
