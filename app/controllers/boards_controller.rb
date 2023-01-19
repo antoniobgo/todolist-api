@@ -32,6 +32,15 @@ class BoardsController < ApplicationController
     end
   end
 
+  def destroy
+    board = Board.find(params[:id])
+    if board.destroy
+      render :nothing, status: :no_content
+    else
+      render json: {message: "couldnt delete board"}, status: :unprocessable_entity
+    end
+  end
+
   def user_boards
     # boards = Board.find_by(user_id: current_user.id)
     render json: current_user.boards.sort_by(&:id)
