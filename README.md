@@ -1,24 +1,35 @@
-# README
+# 2BDone backend.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## O que é?
 
-Things you may want to cover:
+```
+API de tasks que alimenta a aplicação 2BDone.
+Repositório do frontend: https://github.com/antoniobgo/2BDone
+```
 
-* Ruby version
+## Link:
 
-* System dependencies
+```
+Se quiser testar a aplicação que essa API alimenta, acesse o link:
+https://tobdone-3a16b.web.app/
+```
 
-* Configuration
+### Tecnologias utilizadas:
 
-* Database creation
+```
+Criada utilizando Rails 7.
 
-* Database initialization
+```
 
-* How to run the test suite
+### Funcionalidades (em desenvolvimento):
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+1- Autenticação: cadastro via email(ainda sem verificação de email), login e logout (estes utilizando autenticação JWT).
+2- Criação, edição e exclusão dos projetos, seções e tarefas.
+```
 
-* Deployment instructions
+### Documentação das rotas e recursos:
 
-* ...
+```
+Em desenvolvimento.
+```
