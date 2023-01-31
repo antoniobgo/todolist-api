@@ -85,6 +85,7 @@ test:
 #
 production:
   <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
   database: todolist_api_production
-  username: todolist_api
-  password: <%= ENV["TODOLIST_API_DATABASE_PASSWORD"] %>
+  username: <%= ENV["PGUSER"] %>
+  password: <%= ENV["PGPASSWORD"] %>
