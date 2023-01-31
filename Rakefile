@@ -4,5 +4,8 @@
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
 require_relative 'config/application'
-
+    namespace :assets do 
+        task 'precompile' do puts "Not precompiling assets..."                 
+        end 
+    end
 Rails.application.load_tasks
