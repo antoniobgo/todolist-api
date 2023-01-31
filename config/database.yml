@@ -87,3 +87,5 @@ production:
   <<: *default
   url: <%= ENV["DATABASE_URL"] %>
   database: todolist_api_production
+  username: <%= ENV["PGUSER"] %>
+  password: <%= ENV["PGPASSWORD"] %>
