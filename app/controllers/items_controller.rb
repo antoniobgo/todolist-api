@@ -16,6 +16,25 @@ class ItemsController < ApplicationController
     end
   end
 
+  def update
+    item = Item.find_by!(id: params[:id])
+    
+    if item.update!(item_params)
+      render json: {item: item.as_json(only: [:id, :title, :description])}, status: 200
+    else
+      render json: {message: "couldnt edit item"}, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    item = Item.find(params[:id])
+    if item.destroy
+      render :nothing, status: :no_content
+    else
+      render json: {message: "couldnt delete item"}, status: :unprocessable_entity
+    end
+  end
+
   private
   
   def item_params

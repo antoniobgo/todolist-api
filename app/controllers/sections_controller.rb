@@ -16,6 +16,25 @@ class SectionsController < ApplicationController
     end
   end
 
+  def update
+    section = Section.find_by!(id: params[:id])
+    section.title = params[:title]
+    if section.save
+      render json: {section: section.as_json(only: [:id, :title])}, status: 200
+    else
+      render json: {message: "couldnt update section"}, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    section = Section.find_by!(id: params[:id])
+    if section.destroy
+      render :nothing, status: :no_content
+    else
+      render json: {message: "couldnt destroy section"}, status: :unprocessable_entity
+    end
+  end
+
 
   private
   
